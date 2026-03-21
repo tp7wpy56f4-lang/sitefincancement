@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plan d’investissement - Outils</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --bg-soft: #e5e7eb;
+      --card-bg: #ffffff;
+      --border: #d1d5db;
+      --border-soft: #e5e7eb;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --primary: #4b5563;
+      --primary-soft: #e5e7eb;
+      --accent: #111827;
+      --accent-soft: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e5e7eb 0, #f3f4f6 50%, #e5e7eb 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 12px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1800px;
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .sidebar {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 18px 16px 14px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .main {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 18px 16px 14px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .title-block h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .title-block p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .totals {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .total-card {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .total-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .total-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .meta span strong {
+      color: var(--text);
+    }
+
+    .filters {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    select,
+    .search-box input {
+      width: 100%;
+      font-size: 13px;
+      padding: 6px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      color: var(--text);
+      outline: none;
+    }
+
+    select:focus,
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary-soft);
+      background: #ffffff;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .section-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .section-header span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .table-wrapper {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      table-layout: auto;
+    }
+
+    thead {
+      background: #f3f4f6;
+    }
+
+    th {
+      text-align: left;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 5px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #ffffff;
+    }
+
+    tbody tr:hover {
+      background: #e5e7eb;
+    }
+
+    td {
+      font-size: 12px;
+      padding: 4px 5px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    td:nth-child(2),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(8),
+    td:nth-child(9) {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Alignement centré de Quantité à Coût total TTC (colonnes 3 à 9) */
+    #outils-table th:nth-child(3),
+    #outils-table th:nth-child(4),
+    #outils-table th:nth-child(5),
+    #outils-table th:nth-child(6),
+    #outils-table th:nth-child(7),
+    #outils-table th:nth-child(8),
+    #outils-table th:nth-child(9),
+    #outils-table td:nth-child(3),
+    #outils-table td:nth-child(4),
+    #outils-table td:nth-child(5),
+    #outils-table td:nth-child(6),
+    #outils-table td:nth-child(7),
+    #outils-table td:nth-child(8),
+    #outils-table td:nth-child(9) {
+      text-align: center;
+    }
+
+    tfoot td {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      background: #f3f4f6;
+    }
+
+    tfoot td.label-cell {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    tfoot td.amount {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .category-row td {
+      background: #e5e7eb;
+      border-top: 2px solid #d1d5db;
+      border-bottom: 1px solid #d1d5db;
+      font-weight: 600;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px 8px;
+      }
+      .sidebar,
+      .main {
+        padding: 14px 12px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="title-block">
+        <h1>Plan d’investissement</h1>
+        <p>Liste des outils et matériel pour l’atelier</p>
+      </div>
+
+      <div class="totals">
+        <div class="total-card">
+          <div>
+            <div class="total-label">Total HT</div>
+          </div>
+          <div class="total-value" id="total-ht">–</div>
+        </div>
+        <div class="total-card">
+          <div>
+            <div class="total-label">Total TTC</div>
+          </div>
+          <div class="total-value" id="total-ttc">–</div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="categorie-select" class="filter-label">Catégorie</label>
+          <select id="categorie-select">
+            <option value="toutes">Toutes les catégories</option>
+            <option value="Outils manuels">Outils manuels</option>
+            <option value="Outils électriques">Outils électriques</option>
+            <option value="Mesure et traçage">Mesure et traçage</option>
+            <option value="Fournitures">Fournitures</option>
+            <option value="Consommable">Consommable</option>
+            <option value="EPI">EPI</option>
+            <option value="Mobilier">Mobilier</option>
+            <option value="Matériel de bureau">Matériel de bureau</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="search-input">Recherche</label>
+          <div class="search-box">
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Outil, site, référence..."
+            />
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="section-header">
+        <h2>Liste détaillée</h2>
+        <span id="current-filter-label">Toutes catégories</span>
+      </div>
+
+      <div class="table-wrapper">
+        <div>
+          <table id="outils-table">
+            <thead>
+              <tr>
+                <th>Catégorie</th>
+                <th>Outil</th>
+                <th>Quantité</th>
+                <th>Site d’achat</th>
+                <th>Prix unitaire HT</th>
+                <th>Prix unitaire TTC</th>
+                <th>Référence</th>
+                <th>Coût total HT</th>
+                <th>Coût total TTC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Lignes générées en JS -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="label-cell" colspan="7">Total affiché</td>
+                <td class="amount" id="footer-ht">–</td>
+                <td class="amount" id="footer-ttc">–</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="status">
+        <span>Trié par catégorie puis par nom d’outil.</span>
+        <span>Filtres appliqués en temps réel.</span>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // 1) DONNÉES : remplace le contenu du tableau ci-dessous
+    // par TON tableau OUTILS actuel (celui que tu as déjà).
+    // Garde la même structure { categorie, outil, quantite, ... }.
+
+    const OUTILS = [
+      {
+	    categorie: "Outils manuels",
+	    outil: "Varlope",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "320.75",
+	    prixUnitaireTTC: "384.90",
+	    reference: "308968",
+	    coutTotalHT: "641.50",
+	    coutTotalTTC: "769.80"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Rabot de paume",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "189.92",
+	    prixUnitaireTTC: "227.90",
+	    reference: "308961",
+	    coutTotalHT: "189.92",
+	    coutTotalTTC: "227.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Ciseau à bois Kirshen",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "125.75",
+	    prixUnitaireTTC: "150.90",
+	    reference: "303980",
+	    coutTotalHT: "125.75",
+	    coutTotalTTC: "150.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Ciseau à bois Japonais 3mm",
+	    quantite: 1,
+	    siteAchat: "Dictum",
+	    prixUnitaireHT: "23.92",
+	    prixUnitaireTTC: "28.70",
+	    reference: "710780",
+	    coutTotalHT: "23.92",
+	    coutTotalTTC: "28.70"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Râpe piquée main",
+	    quantite: 2,
+	    siteAchat: "Auriou",
+	    prixUnitaireHT: "139.50",
+	    prixUnitaireTTC: "167.40",
+	    reference: "L250P9",
+	    coutTotalHT: "279.00",
+	    coutTotalTTC: "334.80"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Scie japonaise",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "32.42",
+	    prixUnitaireTTC: "38.90",
+	    reference: "309310",
+	    coutTotalHT: "32.42",
+	    coutTotalTTC: "38.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Scie à fretter",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "29.92",
+	    prixUnitaireTTC: "35.90",
+	    reference: "303000",
+	    coutTotalHT: "29.92",
+	    coutTotalTTC: "35.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Scie à restaurer",
+	    quantite: 2,
+	    siteAchat: "Dictum",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "712309",
+	    coutTotalHT: "33.17",
+	    coutTotalTTC: "39.80"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Scie à chantourner",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "24.92",
+	    prixUnitaireTTC: "29.90",
+	    reference: "301810",
+	    coutTotalHT: "24.92",
+	    coutTotalTTC: "29.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lame de scie à chantourner",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "2.83",
+	    prixUnitaireTTC: "3.40",
+	    reference: "308009",
+	    coutTotalHT: "5.67",
+	    coutTotalTTC: "6.80"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à chanfreiner",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.67",
+	    prixUnitaireTTC: "20.00",
+	    reference: "BOS-FBF-9025",
+	    coutTotalHT: "16.67",
+	    coutTotalTTC: "20.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,010\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-TL-NF10",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,013\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-Tl-NF13",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,016\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-Tl-NF16",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,024\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-Tl-NF24",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,028\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-Tl-NF28",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,032\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "15.83",
+	    prixUnitaireTTC: "19.00",
+	    reference: "ALL-Tl-NF32",
+	    coutTotalHT: "15.83",
+	    coutTotalTTC: "19.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,036\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "ALL-Tl-NF36",
+	    coutTotalHT: "16.58",
+	    coutTotalTTC: "19.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,042\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "ALL-Tl-NF42",
+	    coutTotalHT: "16.58",
+	    coutTotalTTC: "19.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,046\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "ALL-Tl-NF46",
+	    coutTotalHT: "16.58",
+	    coutTotalTTC: "19.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,050\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "ALL-Tl-NF50",
+	    coutTotalHT: "16.58",
+	    coutTotalTTC: "19.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet ,056\"",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "16.58",
+	    prixUnitaireTTC: "19.90",
+	    reference: "ALL-Tl-NF56",
+	    coutTotalHT: "16.58",
+	    coutTotalTTC: "19.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime à sillet basse",
+	    quantite: 1,
+	    siteAchat: "Madinter",
+	    prixUnitaireHT: "83.51",
+	    prixUnitaireTTC: "100.21",
+	    reference: "0887",
+	    coutTotalHT: "83.51",
+	    coutTotalTTC: "100.21"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lime arrondi",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "87.50",
+	    prixUnitaireTTC: "105.00",
+	    reference: "ALL-LT-0840-000",
+	    coutTotalHT: "87.50",
+	    coutTotalTTC: "105.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Lousse",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "31.67",
+	    prixUnitaireTTC: "38.00",
+	    reference: "ALL-LT-4238-000",
+	    coutTotalHT: "31.67",
+	    coutTotalTTC: "38.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Forêts bois",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "114.92",
+	    prixUnitaireTTC: "137.90",
+	    reference: "304826",
+	    coutTotalHT: "114.92",
+	    coutTotalTTC: "137.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Forêt métal",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "38.25",
+	    prixUnitaireTTC: "45.90",
+	    reference: "904006",
+	    coutTotalHT: "38.25",
+	    coutTotalTTC: "45.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Forêt 16 mm",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "24.08",
+	    prixUnitaireTTC: "28.90",
+	    reference: "316135",
+	    coutTotalHT: "24.08",
+	    coutTotalTTC: "28.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Forêt 22 mm",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "27.42",
+	    prixUnitaireTTC: "32.90",
+	    reference: "316135",
+	    coutTotalHT: "27.42",
+	    coutTotalTTC: "32.90"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Pince coupante",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "24.50",
+	    prixUnitaireTTC: "29.40",
+	    reference: "322040",
+	    coutTotalHT: "24.50",
+	    coutTotalTTC: "29.40"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Marteau à frettes",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "30.00",
+	    prixUnitaireTTC: "36.00",
+	    reference: "HOS-TL-HMT-L-570030",
+	    coutTotalHT: "30.00",
+	    coutTotalTTC: "36.00"
+	  },
+	  {
+	    categorie: "Outils manuels",
+	    outil: "Pince extraction frettes",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "43.33",
+	    prixUnitaireTTC: "52.00",
+	    reference: "SUM-SUM8002",
+	    coutTotalHT: "43.33",
+	    coutTotalTTC: "52.00"
+	  },
+       {
+	    categorie: "Mesure et traçage",
+	    outil: "Equerre de précision",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "19.08",
+	    prixUnitaireTTC: "22.90",
+	    reference: "311092",
+	    coutTotalHT: "38.17",
+	    coutTotalTTC: "76.33"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Equerre plate",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "10.75",
+	    prixUnitaireTTC: "12.90",
+	    reference: "310350",
+	    coutTotalHT: "21.50",
+	    coutTotalTTC: "43.00"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Equerre à épaulement 100 mm",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "34.08",
+	    prixUnitaireTTC: "40.90",
+	    reference: "311135",
+	    coutTotalHT: "34.08",
+	    coutTotalTTC: "34.08"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Equerre à épaulement 150 mm",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "49.92",
+	    prixUnitaireTTC: "59.90",
+	    reference: "311136",
+	    coutTotalHT: "49.92",
+	    coutTotalTTC: "49.92"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Raporteur de précision",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "20.33",
+	    prixUnitaireTTC: "24.40",
+	    reference: "310355",
+	    coutTotalHT: "40.67",
+	    coutTotalTTC: "81.33"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Pied à coullisse",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "45.75",
+	    prixUnitaireTTC: "54.90",
+	    reference: "410005",
+	    coutTotalHT: "45.75",
+	    coutTotalTTC: "45.75"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Règle de 1 000 mm",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "36.58",
+	    prixUnitaireTTC: "43.90",
+	    reference: "310303",
+	    coutTotalHT: "73.17",
+	    coutTotalTTC: "146.33"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Règle de 600 mm",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "20.75",
+	    prixUnitaireTTC: "24.90",
+	    reference: "310302",
+	    coutTotalHT: "41.50",
+	    coutTotalTTC: "83.00"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Règle à radius",
+	    quantite: 1,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "29.17",
+	    prixUnitaireTTC: "35.00",
+	    reference: "EY-TL-34017",
+	    coutTotalHT: "29.17",
+	    coutTotalTTC: "29.17"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Règlet 150 mm",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "4.92",
+	    prixUnitaireTTC: "5.90",
+	    reference: "310300",
+	    coutTotalHT: "9.83",
+	    coutTotalTTC: "19.67"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Jauge d'épaisseur (pige)",
+	    quantite: 1,
+	    siteAchat: "Madinter",
+	    prixUnitaireHT: "225.19",
+	    prixUnitaireTTC: "270.23",
+	    reference: "5193-M",
+	    coutTotalHT: "225.19",
+	    coutTotalTTC: "225.19"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Jauge d'épaisseur (languette)",
+	    quantite: 1,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "23.25",
+	    prixUnitaireTTC: "27.90",
+	    reference: "309643",
+	    coutTotalHT: "23.25",
+	    coutTotalTTC: "23.25"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Jauge d'action",
+	    quantite: 2,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "9.58",
+	    prixUnitaireTTC: "11.50",
+	    reference: "DAD-PW-SHG-01",
+	    coutTotalHT: "19.17",
+	    coutTotalTTC: "38.33"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Fret rocker",
+	    quantite: 2,
+	    siteAchat: "Emma music",
+	    prixUnitaireHT: "14.17",
+	    prixUnitaireTTC: "17.00",
+	    reference: "BOS-BFR-50",
+	    coutTotalHT: "28.33",
+	    coutTotalTTC: "56.67"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Trusquin",
+	    quantite: 2,
+	    siteAchat: "Dieter schmid",
+	    prixUnitaireHT: "43.25",
+	    prixUnitaireTTC: "51.90",
+	    reference: "307981",
+	    coutTotalHT: "86.50",
+	    coutTotalTTC: "173.00"
+	  },
+	  {
+	    categorie: "Mesure et traçage",
+	    outil: "Accordeur",
+	    quantite: 1,
+	    siteAchat: "Thomann",
+	    prixUnitaireHT: "60.83",
+	    prixUnitaireTTC: "73.00",
+	    reference: "192467",
+	    coutTotalHT: "60.83",
+	    coutTotalTTC: "60.83"
+	  },
+	    {
+	    categorie: "Outils électriques",
+	    outil: "Dremel",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "51.58",
+	    prixUnitaireTTC: "61.90",
+	    reference: "B014UXZHGY",
+	    coutTotalHT: "51.58",
+	    coutTotalTTC: "61.90"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Guide pour filets",
+	    quantite: 2,
+	    siteAchat: "Madinter",
+	    prixUnitaireHT: "73.33",
+	    prixUnitaireTTC: "88.00",
+	    reference: "5248",
+	    coutTotalHT: "146.66",
+	    coutTotalTTC: "175.99"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Support de défonce Dremel",
+	    quantite: 2,
+	    siteAchat: "Madinter",
+	    prixUnitaireHT: "78.84",
+	    prixUnitaireTTC: "94.61",
+	    reference: "5260",
+	    coutTotalHT: "157.68",
+	    coutTotalTTC: "189.22"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Troisième main",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "60.16",
+	    prixUnitaireTTC: "72.19",
+	    reference: "B0CMTDCXPQ",
+	    coutTotalHT: "60.16",
+	    coutTotalTTC: "72.19"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Fer à souder",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "65.74",
+	    prixUnitaireTTC: "78.89",
+	    reference: "B08C51QRH5",
+	    coutTotalHT: "65.74",
+	    coutTotalTTC: "78.89"
+	  },
+    {
+      categorie: "Outils électriques",
+      outil: "Perceuse a colonne",
+      quantite: 1,
+      siteAchat: "Amazon",
+      prixUnitaireHT: "130.67",
+      prixUnitaireTTC: "157.16",
+      reference: "B0987TDJPK",
+      coutTotalHT: "130.67",
+      coutTotalTTC: "157.16"
+    },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Défonçeuse",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "109.17",
+	    prixUnitaireTTC: "131.00",
+	    reference: "B0080D97YY",
+	    coutTotalHT: "109.17",
+	    coutTotalTTC: "131.00"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Fraise trussrod",
+	    quantite: 1,
+	    siteAchat: "Madinter",
+	    prixUnitaireHT: "39.30",
+	    prixUnitaireTTC: "47.16",
+	    reference: "4599",
+	    coutTotalHT: "39.30",
+	    coutTotalTTC: "47.16"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Ponçeuse oscillante",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "254.32",
+	    prixUnitaireTTC: "305.18",
+	    reference: "B0088CBJKM",
+	    coutTotalHT: "254.32",
+	    coutTotalTTC: "305.18"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Ponçeuse orbitale",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "291.97",
+	    prixUnitaireTTC: "350.36",
+	    reference: "B07ZP8XQT1",
+	    coutTotalHT: "291.97",
+	    coutTotalTTC: "350.36"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Lapidaire à bande",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "207.68",
+	    prixUnitaireTTC: "249.21",
+	    reference: "B00CGRT1J6",
+	    coutTotalHT: "207.68",
+	    coutTotalTTC: "249.21"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Calibreuse",
+	    quantite: 1,
+	    siteAchat: "Torros",
+	    prixUnitaireHT: "1599.00",
+	    prixUnitaireTTC: "1918.80",
+	    reference: "717660040",
+	    coutTotalHT: "1599.00",
+	    coutTotalTTC: "1918.80"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Scie sur table",
+	    quantite: 1,
+	    siteAchat: "Amazon",
+	    prixUnitaireHT: "229.99",
+	    prixUnitaireTTC: "275.99",
+	    reference: "B09HCSG8FH",
+	    coutTotalHT: "229.99",
+	    coutTotalTTC: "275.99"
+	  },
+	   {
+	    categorie: "Outils électriques",
+	    outil: "Scie Heigner",
+	    quantite: 1,
+	    siteAchat: "LBC",
+	    prixUnitaireHT: "250.00",
+	    prixUnitaireTTC: "300.00",
+	    reference: "",
+	    coutTotalHT: "250.00",
+	    coutTotalTTC: "300.00"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Commande numérique",
+	    quantite: 1,
+	    siteAchat: "Mekanika",
+	    prixUnitaireHT: "9107.00",
+	    prixUnitaireTTC: "10928.40",
+	    reference: "",
+	    coutTotalHT: "9107.00",
+	    coutTotalTTC: "10928.40"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Aspirateur de chantier",
+	    quantite: 1,
+	    siteAchat: "Karcher",
+	    prixUnitaireHT: "93.03",
+	    prixUnitaireTTC: "111.64",
+	    reference: "WD 3 S V-19/4/20",
+	    coutTotalHT: "93.03",
+	    coutTotalTTC: "111.64"
+	  },
+	  {
+	    categorie: "Outils électriques",
+	    outil: "Aspirateur à copaux",
+	    quantite: 1,
+	    siteAchat: "Maxoutil.com",
+	    prixUnitaireHT: "279.41",
+	    prixUnitaireTTC: "335.29",
+	    reference: "ASP152",
+	    coutTotalHT: "279.41",
+	    coutTotalTTC: "335.29"
+	  },
+	  {
+		categorie: "Outils électriques",
+		outil: "Bague d'adaptation",
+		quantite: 1,
+		siteAchat: "GuitarNBlues",
+		prixUnitaireHT: "6.67",
+		prixUnitaireTTC: "8.00",
+		reference: "RB-106",
+		coutTotalHT: "6.67",
+		coutTotalTTC: "8.00"
+	  },
+	   
+      // additional rows imported from CSV
+      {
+        categorie: "Outils électriques",
+        outil: "Touret",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "97.49",
+        prixUnitaireTTC: "116.99",
+        reference: "B075KGSWGZ",
+        coutTotalHT: "97.49",
+        coutTotalTTC: "116.99"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Tormek",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "386.67",
+        prixUnitaireTTC: "464.00",
+        reference: "B0BRJQKZMX",
+        coutTotalHT: "386.67",
+        coutTotalTTC: "464.00"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Endoscope",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "20.83",
+        prixUnitaireTTC: "24.99",
+        reference: "B0CZHT2VHS",
+        coutTotalHT: "20.83",
+        coutTotalTTC: "24.99"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Cabine de finition",
+        quantite: 1,
+        siteAchat: "",
+        prixUnitaireHT: "2330.00",
+        prixUnitaireTTC: "2796.00",
+        reference: "3664140002835",
+        coutTotalHT: "2330.00",
+        coutTotalTTC: "2796.00"
+      },
+
+      // Outils Autre
+      {
+        categorie: "Autre",
+        outil: "Pistolet à peinture",
+        quantite: 1,
+        siteAchat: "Beschicht",
+        prixUnitaireHT: "232.05",
+        prixUnitaireTTC: "278.46",
+        reference: "1012371",
+        coutTotalHT: "232.05",
+        coutTotalTTC: "278.46"
+      },
+      {
+        categorie: "Autre",
+        outil: "Clé Allen US",
+        quantite: 2,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "13.49",
+        prixUnitaireTTC: "16.19",
+        reference: "B0D54PLJG4",
+        coutTotalHT: "26.98",
+        coutTotalTTC: "53.97"
+      },
+      {
+        categorie: "Autre",
+        outil: "Clé Allen UE",
+        quantite: 2,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "11.66",
+        prixUnitaireTTC: "13.99",
+        reference: "B07QVSB8TZ",
+        coutTotalHT: "23.32",
+        coutTotalTTC: "46.63"
+      },
+      {
+        categorie: "Autre",
+        outil: "Etau d'atelier",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "115.83",
+        prixUnitaireTTC: "139.00",
+        reference: "410500",
+        coutTotalHT: "231.67",
+        coutTotalTTC: "463.33"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint en bois",
+        quantite: 20,
+        siteAchat: "Dictum",
+        prixUnitaireHT: "9.67",
+        prixUnitaireTTC: "11.60",
+        reference: "708122",
+        coutTotalHT: "193.33",
+        coutTotalTTC: "193.33"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint en métal",
+        quantite: 6,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "16.58",
+        prixUnitaireTTC: "19.90",
+        reference: "330204",
+        coutTotalHT: "99.50",
+        coutTotalTTC: "99.50"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint de restauration 127",
+        quantite: 4,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "23.55",
+        prixUnitaireTTC: "28.26",
+        reference: "2010",
+        coutTotalHT: "94.20",
+        coutTotalTTC: "94.20"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint de restauration 178",
+        quantite: 4,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "29.97",
+        prixUnitaireTTC: "35.96",
+        reference: "2011",
+        coutTotalHT: "119.88",
+        coutTotalTTC: "119.88"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint de restauration 229",
+        quantite: 4,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "39.70",
+        prixUnitaireTTC: "47.64",
+        reference: "2012",
+        coutTotalHT: "158.80",
+        coutTotalTTC: "158.80"
+      },
+      {
+        categorie: "Autre",
+        outil: "Serre joint de restauration 279",
+        quantite: 4,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "46.07",
+        prixUnitaireTTC: "55.28",
+        reference: "2013",
+        coutTotalHT: "184.28",
+        coutTotalTTC: "184.28"
+      },
+      {
+        categorie: "Autre",
+        outil: "Etau pour sillet",
+        quantite: 2,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "51.29",
+        prixUnitaireTTC: "61.55",
+        reference: "1816",
+        coutTotalHT: "102.58",
+        coutTotalTTC: "102.58"
+      },
+      {
+        categorie: "Autre",
+        outil: "Cintreuse",
+        quantite: 1,
+        siteAchat: "Fais maison",
+        prixUnitaireHT: "125",
+        prixUnitaireTTC: "150",
+        reference: "X",
+        coutTotalHT: "125",
+        coutTotalTTC: "150"
+      },
+
+      // Consommable
+      {
+        categorie: "Consommable",
+        outil: "Colle TiteBond",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "10.92",
+        prixUnitaireTTC: "13.10",
+        reference: "B07JFCDW23",
+        coutTotalHT: "10.92",
+        coutTotalTTC: "13.10"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Super Niko",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "24.91",
+        prixUnitaireTTC: "29.89",
+        reference: "B08XC352KQ",
+        coutTotalHT: "24.91",
+        coutTotalTTC: "29.89"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Scotch cuivré",
+        quantite: 2,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "11.66",
+        prixUnitaireTTC: "13.99",
+        reference: "B0BCYXPWXL",
+        coutTotalHT: "23.32",
+        coutTotalTTC: "27.98"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Cable blindé 100m",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "174.17",
+        prixUnitaireTTC: "209.00",
+        reference: "2CSW-100",
+        coutTotalHT: "174.17",
+        coutTotalTTC: "209.00"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Colle TiteBond 1 Gal",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "43.29",
+        prixUnitaireTTC: "51.95",
+        reference: "B0002YXE0C",
+        coutTotalHT: "43.29",
+        coutTotalTTC: "51.95"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Colle vinylique",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "9.19",
+        prixUnitaireTTC: "11.03",
+        reference: "B019ZGL0M6",
+        coutTotalHT: "9.19",
+        coutTotalTTC: "11.03"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Rallonge de précision",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "8.92",
+        prixUnitaireTTC: "10.70",
+        reference: "B0CRQKKCG1",
+        coutTotalHT: "8.92",
+        coutTotalTTC: "10.70"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 120",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC120-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 150",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC150-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 180",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC180-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 240",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC240-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 320",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC320-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 600",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC600-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 1000",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC1000-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Papier de verre grain 2000",
+        quantite: 1,
+        siteAchat: "Fred guitar parts",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "KSC2000-B10",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      },
+      {
+        categorie: "Consommable",
+        outil: "Scotch double face",
+        quantite: 3,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "8.31",
+        prixUnitaireTTC: "9.97",
+        reference: "B000QB6HFK",
+        coutTotalHT: "24.93",
+        coutTotalTTC: "29.91"
+      },
+      {
+        categorie: "Consommable",
+        outil: "Scotch de masquage",
+        quantite: 3,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "7.78",
+        prixUnitaireTTC: "9.33",
+        reference: "B00J9Q9VZ6",
+        coutTotalHT: "23.33",
+        coutTotalTTC: "27.99"
+      },
+
+      // EPI
+      {
+        categorie: "EPI",
+        outil: "Bouchons d'oreilles sur mesure",
+        quantite: 2,
+        siteAchat: "Audika",
+        prixUnitaireHT: "132.50",
+        prixUnitaireTTC: "159.00",
+        reference: "Bouchons PasStop® EP2",
+        coutTotalHT: "265.00",
+        coutTotalTTC: "318.00"
+      },
+{
+        categorie: "EPI",
+        outil: "Bouchons d'oreilles",
+        quantite: 1,
+        siteAchat: "Manomano",
+        prixUnitaireHT: "41.53",
+        prixUnitaireTTC: "49.84",
+        reference: "ME91735126",
+        coutTotalHT: "41.53",
+        coutTotalTTC: "49.84"
+      },
+      {
+        categorie: "EPI",
+        outil: "Chaussures de sécurité",
+        quantite: 1,
+        siteAchat: "",
+        prixUnitaireHT: "98.25",
+        prixUnitaireTTC: "117.90",
+        reference: "ME73366068",
+        coutTotalHT: "98.25",
+        coutTotalTTC: "117.90"
+      },
+      {
+        categorie: "EPI",
+        outil: "Thermomètre hygromètre",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "15.83",
+        prixUnitaireTTC: "18.99",
+        reference: "B08V1KXBQD",
+        coutTotalHT: "15.83",
+        coutTotalTTC: "18.99"
+      },
+
+      // Mobilier
+      {
+        categorie: "Mobilier",
+        outil: "Support mural guitare",
+        quantite: 3,
+        siteAchat: "Thomann",
+        prixUnitaireHT: "13.92",
+        prixUnitaireTTC: "16.70",
+        reference: "498922",
+        coutTotalHT: "41.75",
+        coutTotalTTC: "50.10"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Pied guitare",
+        quantite: 3,
+        siteAchat: "Thomann",
+        prixUnitaireHT: "29.17",
+        prixUnitaireTTC: "35.00",
+        reference: "468191",
+        coutTotalHT: "87.50",
+        coutTotalTTC: "105.00"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Rack guitare",
+        quantite: 2,
+        siteAchat: "Thomann",
+        prixUnitaireHT: "73.33",
+        prixUnitaireTTC: "88.00",
+        reference: "264106",
+        coutTotalHT: "146.67",
+        coutTotalTTC: "176.00"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Serrure du pied guitare",
+        quantite: 1,
+        siteAchat: "Thomann",
+        prixUnitaireHT: "35.00",
+        prixUnitaireTTC: "42.00",
+        reference: "517425",
+        coutTotalHT: "35.00",
+        coutTotalTTC: "42.00"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Cafetière",
+        quantite: 1,
+        siteAchat: "Electro depot",
+        prixUnitaireHT: "41.65",
+        prixUnitaireTTC: "49.98",
+        reference: "992833",
+        coutTotalHT: "41.65",
+        coutTotalTTC: "49.98"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Bouilloire",
+        quantite: 1,
+        siteAchat: "Boulanger",
+        prixUnitaireHT: "49.99",
+        prixUnitaireTTC: "59.99",
+        reference: "ete 5 oolong",
+        coutTotalHT: "49.99",
+        coutTotalTTC: "59.99"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Prises établis",
+        quantite: 2,
+        siteAchat: "Leroy merlin",
+        prixUnitaireHT: "52.50",
+        prixUnitaireTTC: "63.00",
+        reference: "84753413",
+        coutTotalHT: "105.00",
+        coutTotalTTC: "126.00"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Lampe loupe",
+        quantite: 2,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "28.33",
+        prixUnitaireTTC: "33.99",
+        reference: "B0DDC3ZJVH",
+        coutTotalHT: "56.65",
+        coutTotalTTC: "67.98"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Extincteurs bois",
+        quantite: 3,
+        siteAchat: "Promat Sécurité",
+        prixUnitaireHT: "30.00",
+        prixUnitaireTTC: "36.00",
+        reference: "138727",
+        coutTotalHT: "90.00",
+        coutTotalTTC: "108.00"
+      },
+
+      // Fournitures
+      {
+        categorie: "Fournitures",
+        outil: "Trousse de secours",
+        quantite: 2,
+        siteAchat: "",
+        prixUnitaireHT: "59.13",
+        prixUnitaireTTC: "70.96",
+        reference: "0422AT02",
+        coutTotalHT: "118.26",
+        coutTotalTTC: "141.91"
+      },
+      {
+        categorie: "Fournitures",
+        outil: "Trousse de secours membre coupé",
+        quantite: 1,
+        siteAchat: "",
+        prixUnitaireHT: "73.80",
+        prixUnitaireTTC: "88.56",
+        reference: "0422MS01",
+        coutTotalHT: "73.80",
+        coutTotalTTC: "88.56"
+      },
+
+      // Matériel de bureau
+      {
+        categorie: "Matériel de bureau",
+        outil: "Imprimante laser",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "324.99",
+        prixUnitaireTTC: "389.99",
+        reference: "B0CWGPL92T",
+        coutTotalHT: "324.99",
+        coutTotalTTC: "389.99"
+      },
+      {
+        categorie: "Matériel de bureau",
+        outil: "Tonner",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "39.58",
+        prixUnitaireTTC: "47.50",
+        reference: "B0G7X8JGGN",
+        coutTotalHT: "39.58",
+        coutTotalTTC: "47.50"
+      },
+      {
+        categorie: "Matériel de bureau",
+        outil: "PC",
+        quantite: 1,
+        siteAchat: "",
+        prixUnitaireHT: "333.33",
+        prixUnitaireTTC: "400.00",
+        reference: "Tim",
+        coutTotalHT: "333.33",
+        coutTotalTTC: "400.00"
+      },
+      {
+        categorie: "Matériel de bureau",
+        outil: "Chaise de bureau",
+        quantite: 1,
+        siteAchat: "",
+        prixUnitaireHT: "",
+        prixUnitaireTTC: "",
+        reference: "",
+        coutTotalHT: "",
+        coutTotalTTC: ""
+      }
+    ];
+
+    const CATEGORY_ORDER = [
+      "Outils manuels",
+      "Outils électriques",
+      "Mesure et traçage",
+      "Fournitures",
+      "Consommable",
+      "EPI",
+      "Mobilier",
+      "Matériel de bureau",
+      "Autre"
+    ];
+
+    function parseNumberFR(value) {
+      if (value === null || value === undefined) return 0;
+      return parseFloat(
+        String(value)
+          .replace(/\s/g, "")
+          .replace("€", "")
+          .replace(",", ".")
+      ) || 0;
+    }
+
+    function formatCurrencyEUR(value) {
+      return value.toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR"
+      });
+    }
+
+    function sortByCategoryAndName(a, b) {
+      const ca = a.categorie || "Autre";
+      const cb = b.categorie || "Autre";
+      const ia = CATEGORY_ORDER.indexOf(ca);
+      const ib = CATEGORY_ORDER.indexOf(cb);
+      const ra = ia === -1 ? 999 : ia;
+      const rb = ib === -1 ? 999 : ib;
+      if (ra !== rb) return ra - rb;
+      return (a.outil || "").localeCompare(b.outil || "", "fr", { sensitivity: "base" });
+    }
+
+    function renderTable(data, activeCategory, searchTerm) {
+      const tbody = document.querySelector("#outils-table tbody");
+      tbody.innerHTML = "";
+
+      let filtered = data.slice();
+
+      if (activeCategory && activeCategory !== "toutes") {
+        filtered = filtered.filter(
+          item => (item.categorie || "").trim() === activeCategory
+        );
+      }
+
+      if (searchTerm) {
+        const q = searchTerm.toLowerCase();
+        filtered = filtered.filter(item => {
+          const text = [
+            item.categorie,
+            item.outil,
+            item.siteAchat,
+            item.reference
+          ]
+            .join(" ")
+            .toLowerCase();
+          return text.includes(q);
+        });
+      }
+
+      filtered.sort(sortByCategoryAndName);
+
+      let totalHT = 0;
+      let totalTTC = 0;
+      let lastCategory = null;
+
+      filtered.forEach(item => {
+        const cat = item.categorie || "Autre";
+
+        if (cat !== lastCategory) {
+          const trGroup = document.createElement("tr");
+          trGroup.className = "category-row";
+          const tdGroup = document.createElement("td");
+          tdGroup.colSpan = 9;
+          tdGroup.textContent = cat;
+          trGroup.appendChild(tdGroup);
+          tbody.appendChild(trGroup);
+          lastCategory = cat;
+        }
+
+        const tr = document.createElement("tr");
+
+        const tdCat = document.createElement("td");
+        tdCat.textContent = cat;
+        tr.appendChild(tdCat);
+
+        const tdOutil = document.createElement("td");
+        tdOutil.textContent = item.outil || "";
+        tr.appendChild(tdOutil);
+
+        const tdQte = document.createElement("td");
+        tdQte.textContent = item.quantite ?? "";
+        tr.appendChild(tdQte);
+
+        const tdSite = document.createElement("td");
+        const site = item.siteAchat || "";
+        if (site.startsWith("http")) {
+          const a = document.createElement("a");
+          a.href = site;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = site;
+          tdSite.appendChild(a);
+        } else {
+          tdSite.textContent = site;
+        }
+        tr.appendChild(tdSite);
+
+        const tdPuHT = document.createElement("td");
+        tdPuHT.textContent = item.prixUnitaireHT || "";
+        tr.appendChild(tdPuHT);
+
+        const tdPuTTC = document.createElement("td");
+        tdPuTTC.textContent = item.prixUnitaireTTC || "";
+        tr.appendChild(tdPuTTC);
+
+        const tdRef = document.createElement("td");
+        tdRef.textContent = item.reference || "";
+        tr.appendChild(tdRef);
+
+        const tdTotalHT = document.createElement("td");
+        tdTotalHT.textContent = item.coutTotalHT || "";
+        tr.appendChild(tdTotalHT);
+
+        const tdTotalTTC = document.createElement("td");
+        tdTotalTTC.textContent = item.coutTotalTTC || "";
+        tr.appendChild(tdTotalTTC);
+
+        tbody.appendChild(tr);
+
+        totalHT += parseNumberFR(item.coutTotalHT);
+        totalTTC += parseNumberFR(item.coutTotalTTC);
+      });
+
+      document.getElementById("total-ht").textContent = formatCurrencyEUR(totalHT);
+      document.getElementById("total-ttc").textContent = formatCurrencyEUR(totalTTC);
+      document.getElementById("footer-ht").textContent = formatCurrencyEUR(totalHT);
+      document.getElementById("footer-ttc").textContent = formatCurrencyEUR(totalTTC);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const selectCat = document.getElementById("categorie-select");
+      const searchInput = document.getElementById("search-input");
+      const filterLabel = document.getElementById("current-filter-label");
+
+      let currentCategory = "toutes";
+      let currentSearch = "";
+
+      function update() {
+        renderTable(OUTILS, currentCategory, currentSearch);
+        filterLabel.textContent =
+          currentCategory === "toutes"
+            ? "Toutes catégories"
+            : currentCategory;
+      }
+
+      selectCat.addEventListener("change", () => {
+        currentCategory = selectCat.value;
+        update();
+      });
+
+      searchInput.addEventListener("input", () => {
+        currentSearch = searchInput.value.trim();
+        update();
+      });
+
+      update();
+    });
+  </script>
+</body>
+</html>
