@@ -4,148 +4,164 @@
   <meta charset="UTF-8" />
   <title>Plan d’investissement - Outils</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f3f4f6;
-      --bg-soft: #e5e7eb;
+      --bg: #f8f7f4;
+      --bg-soft: #efeee9;
       --card-bg: #ffffff;
-      --border: #d1d5db;
-      --border-soft: #e5e7eb;
-      --text: #111827;
-      --text-muted: #6b7280;
-      --primary: #4b5563;
-      --primary-soft: #e5e7eb;
-      --accent: #111827;
-      --accent-soft: #e5e7eb;
+      --border: #e0ddd5;
+      --border-soft: #ebe9e2;
+      --text: #1a1a1a;
+      --text-muted: #7a7568;
+      --primary: #3d3929;
+      --primary-soft: #e8e5dc;
+      --accent: #2c2820;
+      --accent-soft: #f0ede6;
+      --warm-white: #fdfcfa;
+      --highlight: #c8a96e;
+      --highlight-soft: #f5f0e4;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
       min-height: 100vh;
-      background: #ebeff4;
+      background: var(--bg);
       color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
     }
 
+    /* ─── HEADER ─── */
     .app-header {
       width: 100%;
-      max-width: 1800px;
-      margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 24px;
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      border: 1px solid var(--border-soft);
+      padding: 20px 40px;
+      background: var(--accent);
+      border-bottom: 3px solid var(--highlight);
     }
 
     .app-header .brand {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .app-header h1 {
-      font-size: 32px;
+      font-family: 'DM Sans', 'Inter', sans-serif;
+      font-size: 28px;
       margin: 0;
-      color: var(--accent);
+      color: #fff;
       font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .app-header p {
-      color: var(--text-muted);
-      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
       margin: 0;
+      font-weight: 300;
+      letter-spacing: 0.03em;
     }
 
-    .app-header .logo {
-      width: 120px;
-      height: auto;
-      text-align: right;
-      font-size: 12px;
-      color: var(--text-muted);
+    .app-header .logo img {
+      height: 90px;
+      width: auto;
+      filter: invert(1) brightness(2);
+      opacity: 0.9;
     }
 
+    /* ─── LAYOUT ─── */
     .page {
       width: 100%;
-      max-width: 1800px;
+      max-width: 1600px;
       display: grid;
-      grid-template-columns: 300px minmax(0, 1fr);
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 0;
+      padding: 28px 32px;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      background: var(--warm-white);
+      border-radius: 14px 0 0 14px;
+      border: 1px solid var(--border);
+      border-right: none;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
       gap: 20px;
     }
 
-    .sidebar {
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #d7dde4;
-      padding: 18px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .main {
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    .title-block {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-soft);
     }
 
     .title-block h1 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      font-family: 'DM Sans', 'Inter', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 6px;
       color: var(--accent);
     }
 
     .title-block p {
-      font-size: 13px;
-      color: var(--text-muted);
+      font-family: 'DM Sans', 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.3;
+      text-align: center;
     }
 
+    /* ─── TOTALS ─── */
     .totals {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
-      margin-top: 12px;
     }
 
     .total-card {
-      padding: 16px 14px;
-      border-radius: 12px;
-      border: 1px solid #dbe2ea;
-      background: #ffffff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: var(--accent-soft);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 14px;
-      box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+      transition: background 0.2s ease;
+    }
+
+    .total-card:hover {
+      background: var(--highlight-soft);
     }
 
     .total-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .total-value {
       font-weight: 700;
       color: var(--accent);
-      font-size: 18px;
+      font-size: 17px;
+      font-variant-numeric: tabular-nums;
     }
 
     .meta {
@@ -162,103 +178,175 @@
       color: var(--text);
     }
 
+    /* ─── FILTERS ─── */
     .filters {
-      margin-top: 8px;
+      margin-top: 4px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
     }
 
     .filter-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .filter-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     select,
     .search-box input {
       width: 100%;
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
-      padding: 6px 9px;
-      border-radius: 6px;
+      padding: 8px 11px;
+      border-radius: 8px;
       border: 1px solid var(--border);
-      background: #f9fafb;
+      background: #fff;
       color: var(--text);
       outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     select:focus,
     .search-box input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary-soft);
+      border-color: var(--highlight);
+      box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.15);
       background: #ffffff;
     }
 
     .search-box input::placeholder {
+      color: #b0a898;
+    }
+
+    /* ─── CATEGORY LIST ─── */
+    .categorie-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      background: var(--accent-soft);
+    }
+
+    .cat-item:hover {
+      background: var(--highlight-soft);
+      border-color: var(--border);
+    }
+
+    .cat-item.active {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .cat-item.active .cat-name {
+      color: #fff;
+    }
+
+    .cat-item.active .cat-totals {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .cat-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cat-totals {
+      display: flex;
+      gap: 8px;
+      font-size: 10.5px;
       color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cat-totals span {
+      white-space: nowrap;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main {
+      background: #ffffff;
+      border-radius: 0 14px 14px 0;
+      border: 1px solid var(--border);
+      padding: 24px;
     }
 
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 14px;
-      padding: 0 8px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent-soft);
     }
 
     .section-header h2 {
+      font-family: 'DM Sans', 'Inter', sans-serif;
       font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      font-weight: 600;
       margin: 0;
+      color: var(--accent);
     }
 
     .section-header span {
       font-size: 12px;
       color: var(--text-muted);
+      font-weight: 400;
     }
 
+    /* ─── TABLE ─── */
     .table-wrapper {
       border-radius: 10px;
       border: 1px solid var(--border);
       overflow: hidden;
       background: #ffffff;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     }
 
     table {
       width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
       border-collapse: collapse;
       table-layout: auto;
     }
 
-    thead {
-      background: #f3f4f6;
-    }
-
     th {
       text-align: left;
-      font-size: 12px;
+      font-size: 10.5px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 10px 12px;
+      letter-spacing: 0.1em;
+      padding: 12px 14px;
       color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--border);
       white-space: nowrap;
-      background: #ffffff;
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+
+    tbody tr {
+      transition: background 0.15s ease;
     }
 
     tbody tr:nth-child(even) {
-      background: #fbfcfd;
+      background: var(--warm-white);
     }
 
     tbody tr:nth-child(odd) {
@@ -266,24 +354,27 @@
     }
 
     tbody tr:hover {
-      background: #e5e7eb;
+      background: var(--highlight-soft);
     }
 
     td {
       font-size: 13px;
-      padding: 10px 12px;
-      border-bottom: 1px solid #e5e7eb;
-      color: #202a3a;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border-soft);
+      color: var(--text);
       vertical-align: middle;
     }
 
     td a {
-      color: var(--accent);
+      color: var(--highlight);
       text-decoration: none;
       word-break: break-all;
+      font-weight: 500;
+      transition: color 0.15s;
     }
 
     td a:hover {
+      color: var(--accent);
       text-decoration: underline;
     }
 
@@ -314,57 +405,86 @@
     }
 
     tfoot td {
-      padding: 8px 10px;
+      padding: 12px 14px;
       font-size: 13px;
-      border-top: 1px solid var(--border);
-      background: #f3f4f6;
+      border-top: 2px solid var(--border);
+      background: var(--accent-soft);
     }
 
     tfoot td.label-cell {
-      font-size: 11px;
+      font-size: 10.5px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
+      font-weight: 600;
     }
 
     tfoot td.amount {
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
+      color: var(--accent);
     }
 
     .category-row td {
-      background: #e5e7eb;
-      border-top: 2px solid #d1d5db;
-      border-bottom: 1px solid #d1d5db;
+      background: var(--primary);
+      border-top: none;
+      border-bottom: none;
       font-weight: 600;
-      font-size: 12px;
-      color: #374151;
+      font-size: 11.5px;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
+    /* ─── FOOTER STATUS ─── */
     .status {
-      margin-top: 8px;
-      font-size: 12px;
+      margin-top: 14px;
+      font-size: 11.5px;
       color: var(--text-muted);
       display: flex;
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-soft);
     }
 
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .page {
         display: flex;
         flex-direction: column;
+        padding: 16px;
+      }
+      .sidebar {
+        border-radius: 14px 14px 0 0;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+      }
+      .main {
+        border-radius: 0 0 14px 14px;
+      }
+      .app-header {
+        padding: 16px 20px;
+      }
+      .app-header h1 {
+        font-size: 22px;
       }
     }
 
     @media (max-width: 640px) {
-      body {
-        padding: 12px 8px;
+      .app-header {
+        padding: 14px 16px;
+      }
+      .app-header h1 {
+        font-size: 18px;
+      }
+      .app-header .logo img {
+        height: 60px;
       }
       .sidebar,
       .main {
-        padding: 14px 12px 10px;
+        padding: 16px 14px;
       }
     }
   </style>
@@ -373,17 +493,14 @@
   <div class="app-header">
     <div class="brand">
       <h1>Les cordes du Morvan</h1>
-      <p>Liste des outils dont nous aurons besoin</p>
     </div>
     <div class="logo">
-      <div style="font-weight:700;">Logo</div>
-      <div style="font-size:10px; color:#6b7280;">(remplacez par votre image)</div>
+      <img src="Logo_carte.png" alt="Les cordes du Morvan">
     </div>
   </div>
   <div class="page">
     <aside class="sidebar">
       <div class="title-block">
-        <h1>Plan d’investissement</h1>
         <p>Liste des outils et matériel pour l’atelier</p>
       </div>
 
@@ -404,19 +521,8 @@
 
       <div class="filters">
         <div class="filter-group">
-          <label for="categorie-select" class="filter-label">Catégorie</label>
-          <select id="categorie-select">
-            <option value="toutes">Toutes les catégories</option>
-            <option value="Outils manuels">Outils manuels</option>
-            <option value="Outils électriques">Outils électriques</option>
-            <option value="Mesure et traçage">Mesure et traçage</option>
-            <option value="Fournitures">Fournitures</option>
-            <option value="Consommable">Consommable</option>
-            <option value="EPI">EPI</option>
-            <option value="Mobilier">Mobilier</option>
-            <option value="Matériel de bureau">Matériel de bureau</option>
-            <option value="Autre">Autre</option>
-          </select>
+          <label class="filter-label">Catégorie</label>
+          <div id="categorie-list" class="categorie-list"></div>
         </div>
 
         <div class="filter-group">
@@ -481,9 +587,10 @@
     // Garde la même structure { categorie, outil, quantite, ... }.
 
     const OUTILS = [
+      // ── Outils manuels ──────────────────────────────────────────
       {
-	    categorie: "Outils manuels",
-	    outil: "Varlope",
+        categorie: "Outils manuels",
+        outil: "Varlope",
 	    quantite: 2,
 	    siteAchat: "Dieter schmid",
 	    prixUnitaireHT: "320.75",
@@ -833,182 +940,183 @@
 	    coutTotalHT: "43.33",
 	    coutTotalTTC: "52.00"
 	  },
-       {
-	    categorie: "Mesure et traçage",
-	    outil: "Equerre de précision",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "19.08",
-	    prixUnitaireTTC: "22.90",
-	    reference: "311092",
-	    coutTotalHT: "38.17",
-	    coutTotalTTC: "76.33"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Equerre plate",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "10.75",
-	    prixUnitaireTTC: "12.90",
-	    reference: "310350",
-	    coutTotalHT: "21.50",
-	    coutTotalTTC: "43.00"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Equerre à épaulement 100 mm",
-	    quantite: 1,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "34.08",
-	    prixUnitaireTTC: "40.90",
-	    reference: "311135",
-	    coutTotalHT: "34.08",
-	    coutTotalTTC: "34.08"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Equerre à épaulement 150 mm",
-	    quantite: 1,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "49.92",
-	    prixUnitaireTTC: "59.90",
-	    reference: "311136",
-	    coutTotalHT: "49.92",
-	    coutTotalTTC: "49.92"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Raporteur de précision",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "20.33",
-	    prixUnitaireTTC: "24.40",
-	    reference: "310355",
-	    coutTotalHT: "40.67",
-	    coutTotalTTC: "81.33"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Pied à coullisse",
-	    quantite: 1,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "45.75",
-	    prixUnitaireTTC: "54.90",
-	    reference: "410005",
-	    coutTotalHT: "45.75",
-	    coutTotalTTC: "45.75"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Règle de 1 000 mm",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "36.58",
-	    prixUnitaireTTC: "43.90",
-	    reference: "310303",
-	    coutTotalHT: "73.17",
-	    coutTotalTTC: "146.33"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Règle de 600 mm",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "20.75",
-	    prixUnitaireTTC: "24.90",
-	    reference: "310302",
-	    coutTotalHT: "41.50",
-	    coutTotalTTC: "83.00"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Règle à radius",
-	    quantite: 1,
-	    siteAchat: "Emma music",
-	    prixUnitaireHT: "29.17",
-	    prixUnitaireTTC: "35.00",
-	    reference: "EY-TL-34017",
-	    coutTotalHT: "29.17",
-	    coutTotalTTC: "29.17"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Règlet 150 mm",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "4.92",
-	    prixUnitaireTTC: "5.90",
-	    reference: "310300",
-	    coutTotalHT: "9.83",
-	    coutTotalTTC: "19.67"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Jauge d'épaisseur (pige)",
-	    quantite: 1,
-	    siteAchat: "Madinter",
-	    prixUnitaireHT: "225.19",
-	    prixUnitaireTTC: "270.23",
-	    reference: "5193-M",
-	    coutTotalHT: "225.19",
-	    coutTotalTTC: "225.19"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Jauge d'épaisseur (languette)",
-	    quantite: 1,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "23.25",
-	    prixUnitaireTTC: "27.90",
-	    reference: "309643",
-	    coutTotalHT: "23.25",
-	    coutTotalTTC: "23.25"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Jauge d'action",
-	    quantite: 2,
-	    siteAchat: "Emma music",
-	    prixUnitaireHT: "9.58",
-	    prixUnitaireTTC: "11.50",
-	    reference: "DAD-PW-SHG-01",
-	    coutTotalHT: "19.17",
-	    coutTotalTTC: "38.33"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Fret rocker",
-	    quantite: 2,
-	    siteAchat: "Emma music",
-	    prixUnitaireHT: "14.17",
-	    prixUnitaireTTC: "17.00",
-	    reference: "BOS-BFR-50",
-	    coutTotalHT: "28.33",
-	    coutTotalTTC: "56.67"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Trusquin",
-	    quantite: 2,
-	    siteAchat: "Dieter schmid",
-	    prixUnitaireHT: "43.25",
-	    prixUnitaireTTC: "51.90",
-	    reference: "307981",
-	    coutTotalHT: "86.50",
-	    coutTotalTTC: "173.00"
-	  },
-	  {
-	    categorie: "Mesure et traçage",
-	    outil: "Accordeur",
-	    quantite: 1,
-	    siteAchat: "Thomann",
-	    prixUnitaireHT: "60.83",
-	    prixUnitaireTTC: "73.00",
-	    reference: "192467",
-	    coutTotalHT: "60.83",
-	    coutTotalTTC: "60.83"
-	  },
+      // ── Mesure et traçage ────────────────────────────────────────
+      {
+        categorie: "Mesure et traçage",
+        outil: "Equerre de précision",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "19.08",
+        prixUnitaireTTC: "22.90",
+        reference: "311092",
+        coutTotalHT: "38.17",
+        coutTotalTTC: "45.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Equerre plate",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "10.75",
+        prixUnitaireTTC: "12.90",
+        reference: "310350",
+        coutTotalHT: "21.50",
+        coutTotalTTC: "25.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Equerre à épaulement 100 mm",
+        quantite: 1,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "34.08",
+        prixUnitaireTTC: "40.90",
+        reference: "311135",
+        coutTotalHT: "34.08",
+        coutTotalTTC: "40.90"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Equerre à épaulement 150 mm",
+        quantite: 1,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "49.92",
+        prixUnitaireTTC: "59.90",
+        reference: "311136",
+        coutTotalHT: "49.92",
+        coutTotalTTC: "59.90"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Raporteur de précision",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "20.33",
+        prixUnitaireTTC: "24.40",
+        reference: "310355",
+        coutTotalHT: "40.67",
+        coutTotalTTC: "48.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Pied à coullisse",
+        quantite: 1,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "45.75",
+        prixUnitaireTTC: "54.90",
+        reference: "410005",
+        coutTotalHT: "45.75",
+        coutTotalTTC: "54.90"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Règle de 1 000 mm",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "36.58",
+        prixUnitaireTTC: "43.90",
+        reference: "310303",
+        coutTotalHT: "73.17",
+        coutTotalTTC: "87.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Règle de 600 mm",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "20.75",
+        prixUnitaireTTC: "24.90",
+        reference: "310302",
+        coutTotalHT: "41.50",
+        coutTotalTTC: "49.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Règle à radius",
+        quantite: 1,
+        siteAchat: "Emma music",
+        prixUnitaireHT: "29.17",
+        prixUnitaireTTC: "35.00",
+        reference: "EY-TL-34017",
+        coutTotalHT: "29.17",
+        coutTotalTTC: "35.00"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Règlet 150 mm",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "4.92",
+        prixUnitaireTTC: "5.90",
+        reference: "310300",
+        coutTotalHT: "9.83",
+        coutTotalTTC: "11.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Jauge d'épaisseur (pige)",
+        quantite: 1,
+        siteAchat: "Madinter",
+        prixUnitaireHT: "225.19",
+        prixUnitaireTTC: "270.23",
+        reference: "5193-M",
+        coutTotalHT: "225.19",
+        coutTotalTTC: "270.23"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Jauge d'épaisseur (languette)",
+        quantite: 1,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "23.25",
+        prixUnitaireTTC: "27.90",
+        reference: "309643",
+        coutTotalHT: "23.25",
+        coutTotalTTC: "27.90"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Jauge d'action",
+        quantite: 2,
+        siteAchat: "Emma music",
+        prixUnitaireHT: "9.58",
+        prixUnitaireTTC: "11.50",
+        reference: "DAD-PW-SHG-01",
+        coutTotalHT: "19.17",
+        coutTotalTTC: "23.00"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Fret rocker",
+        quantite: 2,
+        siteAchat: "Emma music",
+        prixUnitaireHT: "14.17",
+        prixUnitaireTTC: "17.00",
+        reference: "BOS-BFR-50",
+        coutTotalHT: "28.33",
+        coutTotalTTC: "34.00"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Trusquin",
+        quantite: 2,
+        siteAchat: "Dieter schmid",
+        prixUnitaireHT: "43.25",
+        prixUnitaireTTC: "51.90",
+        reference: "307981",
+        coutTotalHT: "86.50",
+        coutTotalTTC: "103.80"
+      },
+      {
+        categorie: "Mesure et traçage",
+        outil: "Accordeur",
+        quantite: 1,
+        siteAchat: "Thomann",
+        prixUnitaireHT: "60.83",
+        prixUnitaireTTC: "73.00",
+        reference: "192467",
+        coutTotalHT: "60.83",
+        coutTotalTTC: "73.00"
+      },
 	    {
 	    categorie: "Outils électriques",
 	    outil: "Dremel",
@@ -1064,17 +1172,17 @@
 	    coutTotalHT: "65.74",
 	    coutTotalTTC: "78.89"
 	  },
-    {
-      categorie: "Outils électriques",
-      outil: "Perceuse a colonne",
-      quantite: 1,
-      siteAchat: "Amazon",
-      prixUnitaireHT: "130.67",
-      prixUnitaireTTC: "157.16",
-      reference: "B0987TDJPK",
-      coutTotalHT: "130.67",
-      coutTotalTTC: "157.16"
-    },
+      {
+        categorie: "Outils électriques",
+        outil: "Perceuse à colonne",
+        quantite: 1,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "130.97",
+        prixUnitaireTTC: "157.16",
+        reference: "B0987TDJPK",
+        coutTotalHT: "130.97",
+        coutTotalTTC: "157.16"
+      },
 	  {
 	    categorie: "Outils électriques",
 	    outil: "Défonçeuse",
@@ -1152,28 +1260,28 @@
 	    coutTotalHT: "229.99",
 	    coutTotalTTC: "275.99"
 	  },
-	   {
-	    categorie: "Outils électriques",
-	    outil: "Scie Heigner",
-	    quantite: 1,
-	    siteAchat: "LBC",
-	    prixUnitaireHT: "250.00",
-	    prixUnitaireTTC: "300.00",
-	    reference: "",
-	    coutTotalHT: "250.00",
-	    coutTotalTTC: "300.00"
-	  },
-	  {
-	    categorie: "Outils électriques",
-	    outil: "Commande numérique",
-	    quantite: 1,
-	    siteAchat: "Mekanika",
-	    prixUnitaireHT: "9107.00",
-	    prixUnitaireTTC: "10928.40",
-	    reference: "",
-	    coutTotalHT: "9107.00",
-	    coutTotalTTC: "10928.40"
-	  },
+      {
+        categorie: "Outils électriques",
+        outil: "Scie Heigner",
+        quantite: 1,
+        siteAchat: "Occasion",
+        prixUnitaireHT: "250.00",
+        prixUnitaireTTC: "300.00",
+        reference: "",
+        coutTotalHT: "250.00",
+        coutTotalTTC: "300.00"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Commande numérique",
+        quantite: 1,
+        siteAchat: "Mekanika",
+        prixUnitaireHT: "9107.00",
+        prixUnitaireTTC: "10928.40",
+        reference: "Pro L",
+        coutTotalHT: "9107.00",
+        coutTotalTTC: "10928.40"
+      },
 	  {
 	    categorie: "Outils électriques",
 	    outil: "Aspirateur de chantier",
@@ -1246,18 +1354,51 @@
         categorie: "Outils électriques",
         outil: "Cabine de finition",
         quantite: 1,
-        siteAchat: "",
+        siteAchat: "Holzprofi",
         prixUnitaireHT: "2330.00",
         prixUnitaireTTC: "2796.00",
-        reference: "3664140002835",
+        reference: "",
         coutTotalHT: "2330.00",
         coutTotalTTC: "2796.00"
       },
+      {
+        categorie: "Outils électriques",
+        outil: "Polisseuse",
+        quantite: 2,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "24.99",
+        prixUnitaireTTC: "29.99",
+        reference: "7435125967953",
+        coutTotalHT: "49.98",
+        coutTotalTTC: "59.98"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Batterie polisseuse",
+        quantite: 2,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "12.49",
+        prixUnitaireTTC: "14.99",
+        reference: "7435125728769",
+        coutTotalHT: "24.98",
+        coutTotalTTC: "29.98"
+      },
+      {
+        categorie: "Outils électriques",
+        outil: "Chargeur",
+        quantite: 1,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "8.33",
+        prixUnitaireTTC: "9.99",
+        reference: "7435125728752",
+        coutTotalHT: "8.33",
+        coutTotalTTC: "9.99"
+      },
 
-      // Outils Autre
+      // ── Autre ────────────────────────────────────────────────────
       {
         categorie: "Autre",
-        outil: "Pistolet à peinture",
+        outil: "Pistolet à peinture Buse 1,8",
         quantite: 1,
         siteAchat: "Beschicht",
         prixUnitaireHT: "232.05",
@@ -1275,7 +1416,7 @@
         prixUnitaireTTC: "16.19",
         reference: "B0D54PLJG4",
         coutTotalHT: "26.98",
-        coutTotalTTC: "53.97"
+        coutTotalTTC: "32.38"
       },
       {
         categorie: "Autre",
@@ -1286,7 +1427,7 @@
         prixUnitaireTTC: "13.99",
         reference: "B07QVSB8TZ",
         coutTotalHT: "23.32",
-        coutTotalTTC: "46.63"
+        coutTotalTTC: "27.98"
       },
       {
         categorie: "Autre",
@@ -1297,7 +1438,7 @@
         prixUnitaireTTC: "139.00",
         reference: "410500",
         coutTotalHT: "231.67",
-        coutTotalTTC: "463.33"
+        coutTotalTTC: "278.00"
       },
       {
         categorie: "Autre",
@@ -1308,7 +1449,7 @@
         prixUnitaireTTC: "11.60",
         reference: "708122",
         coutTotalHT: "193.33",
-        coutTotalTTC: "193.33"
+        coutTotalTTC: "232.00"
       },
       {
         categorie: "Autre",
@@ -1319,7 +1460,7 @@
         prixUnitaireTTC: "19.90",
         reference: "330204",
         coutTotalHT: "99.50",
-        coutTotalTTC: "99.50"
+        coutTotalTTC: "119.40"
       },
       {
         categorie: "Autre",
@@ -1330,7 +1471,7 @@
         prixUnitaireTTC: "28.26",
         reference: "2010",
         coutTotalHT: "94.20",
-        coutTotalTTC: "94.20"
+        coutTotalTTC: "113.04"
       },
       {
         categorie: "Autre",
@@ -1341,7 +1482,7 @@
         prixUnitaireTTC: "35.96",
         reference: "2011",
         coutTotalHT: "119.88",
-        coutTotalTTC: "119.88"
+        coutTotalTTC: "143.86"
       },
       {
         categorie: "Autre",
@@ -1352,7 +1493,7 @@
         prixUnitaireTTC: "47.64",
         reference: "2012",
         coutTotalHT: "158.80",
-        coutTotalTTC: "158.80"
+        coutTotalTTC: "190.56"
       },
       {
         categorie: "Autre",
@@ -1363,7 +1504,18 @@
         prixUnitaireTTC: "55.28",
         reference: "2013",
         coutTotalHT: "184.28",
-        coutTotalTTC: "184.28"
+        coutTotalTTC: "221.14"
+      },
+      {
+        categorie: "Autre",
+        outil: "Cintreuse",
+        quantite: 1,
+        siteAchat: "Fabriquée par nos soins",
+        prixUnitaireHT: "125.00",
+        prixUnitaireTTC: "150.00",
+        reference: "",
+        coutTotalHT: "125.00",
+        coutTotalTTC: "150.00"
       },
       {
         categorie: "Autre",
@@ -1374,18 +1526,7 @@
         prixUnitaireTTC: "61.55",
         reference: "1816",
         coutTotalHT: "102.58",
-        coutTotalTTC: "102.58"
-      },
-      {
-        categorie: "Autre",
-        outil: "Cintreuse",
-        quantite: 1,
-        siteAchat: "Fais maison",
-        prixUnitaireHT: "125",
-        prixUnitaireTTC: "150",
-        reference: "X",
-        coutTotalHT: "125",
-        coutTotalTTC: "150"
+        coutTotalTTC: "123.10"
       },
 
       // Consommable
@@ -1468,91 +1609,58 @@
       },
       {
         categorie: "Consommable",
-        outil: "Papier de verre grain 120",
+        outil: "Papier de verre grain ponceuse (120 à 320)",
         quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC120-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        siteAchat: "Prixabrasif",
+        prixUnitaireHT: "1.55",
+        prixUnitaireTTC: "177.60",
+        reference: "PACK250XTRACTD125",
+        coutTotalHT: "1.55",
+        coutTotalTTC: "177.60"
       },
       {
         categorie: "Consommable",
-        outil: "Papier de verre grain 150",
+        outil: "Pas mousse",
         quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC150-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        siteAchat: "Prixabrasif",
+        prixUnitaireHT: "11.92",
+        prixUnitaireTTC: "14.30",
+        reference: "IMV125",
+        coutTotalHT: "11.92",
+        coutTotalTTC: "14.30"
       },
       {
         categorie: "Consommable",
-        outil: "Papier de verre grain 180",
-        quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC180-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        outil: "Papier de verre grain manuel tout grains",
+        quantite: 150,
+        siteAchat: "Prixabrasif",
+        prixUnitaireHT: "1.25",
+        prixUnitaireTTC: "1.50",
+        reference: "FAIMPLA230LO280G7000",
+        coutTotalHT: "187.50",
+        coutTotalTTC: "225.00"
       },
       {
         categorie: "Consommable",
-        outil: "Papier de verre grain 240",
+        outil: "Polish fin",
         quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC240-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        siteAchat: "Prixabrasif",
+        prixUnitaireHT: "55.96",
+        prixUnitaireTTC: "67.15",
+        reference: "LPFINE1L",
+        coutTotalHT: "55.96",
+        coutTotalTTC: "67.15"
       },
       {
         categorie: "Consommable",
-        outil: "Papier de verre grain 320",
+        outil: "Polish très fin",
         quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC320-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
-      },
-      {
-        categorie: "Consommable",
-        outil: "Papier de verre grain 600",
-        quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC600-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
-      },
-      {
-        categorie: "Consommable",
-        outil: "Papier de verre grain 1000",
-        quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC1000-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
-      },
-      {
-        categorie: "Consommable",
-        outil: "Papier de verre grain 2000",
-        quantite: 1,
-        siteAchat: "Fred guitar parts",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
-        reference: "KSC2000-B10",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        siteAchat: "Prixabrasif",
+        prixUnitaireHT: "55.96",
+        prixUnitaireTTC: "67.15",
+        reference: "LPULTIMATE1L",
+        coutTotalHT: "55.96",
+        coutTotalTTC: "67.15"
       },
       {
         categorie: "Consommable",
@@ -1659,7 +1767,7 @@
       },
       {
         categorie: "Mobilier",
-        outil: "Serrure du pied guitare",
+        outil: "Serrure de verrouillage du pied guitare",
         quantite: 1,
         siteAchat: "Thomann",
         prixUnitaireHT: "35.00",
@@ -1723,8 +1831,52 @@
         coutTotalHT: "90.00",
         coutTotalTTC: "108.00"
       },
+      {
+        categorie: "Mobilier",
+        outil: "Chaise de bureau",
+        quantite: 1,
+        siteAchat: "But",
+        prixUnitaireHT: "41.66",
+        prixUnitaireTTC: "49.99",
+        reference: "0716035044093",
+        coutTotalHT: "41.66",
+        coutTotalTTC: "49.99"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Etablie travail manuel",
+        quantite: 2,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "208.33",
+        prixUnitaireTTC: "249.99",
+        reference: "7435125738782",
+        coutTotalHT: "416.65",
+        coutTotalTTC: "499.98"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Etabli machines",
+        quantite: 1,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "333.33",
+        prixUnitaireTTC: "399.99",
+        reference: "7435125813854",
+        coutTotalHT: "333.33",
+        coutTotalTTC: "399.99"
+      },
+      {
+        categorie: "Mobilier",
+        outil: "Etabli tour",
+        quantite: 1,
+        siteAchat: "HBM machines",
+        prixUnitaireHT: "141.66",
+        prixUnitaireTTC: "169.99",
+        reference: "7435125738768",
+        coutTotalHT: "141.66",
+        coutTotalTTC: "169.99"
+      },
 
-      // Fournitures
+      // ── Fournitures ───────────────────────────────────────────────
       {
         categorie: "Fournitures",
         outil: "Trousse de secours",
@@ -1775,23 +1927,47 @@
         categorie: "Matériel de bureau",
         outil: "PC",
         quantite: 1,
-        siteAchat: "",
+        siteAchat: "Occasion",
         prixUnitaireHT: "333.33",
         prixUnitaireTTC: "400.00",
-        reference: "Tim",
+        reference: "",
         coutTotalHT: "333.33",
         coutTotalTTC: "400.00"
       },
+
+      // ── Matériel vidéo ────────────────────────────────────────────
       {
-        categorie: "Matériel de bureau",
-        outil: "Chaise de bureau",
+        categorie: "Matériel vidéo",
+        outil: "Caméra",
         quantite: 1,
-        siteAchat: "",
-        prixUnitaireHT: "",
-        prixUnitaireTTC: "",
+        siteAchat: "Occasion",
+        prixUnitaireHT: "375.00",
+        prixUnitaireTTC: "450.00",
+        reference: "Sony ZV-1",
+        coutTotalHT: "375.00",
+        coutTotalTTC: "450.00"
+      },
+      {
+        categorie: "Matériel vidéo",
+        outil: "Micros",
+        quantite: 2,
+        siteAchat: "Amazon",
+        prixUnitaireHT: "40.00",
+        prixUnitaireTTC: "48.00",
+        reference: "B07WM65GTF",
+        coutTotalHT: "80.00",
+        coutTotalTTC: "96.00"
+      },
+      {
+        categorie: "Matériel vidéo",
+        outil: "Trépied",
+        quantite: 1,
+        siteAchat: "Occasion",
+        prixUnitaireHT: "33.33",
+        prixUnitaireTTC: "40.00",
         reference: "",
-        coutTotalHT: "",
-        coutTotalTTC: ""
+        coutTotalHT: "33.33",
+        coutTotalTTC: "40.00"
       }
     ];
 
@@ -1799,12 +1975,13 @@
       "Outils manuels",
       "Outils électriques",
       "Mesure et traçage",
-      "Fournitures",
+      "Autre",
       "Consommable",
       "EPI",
       "Mobilier",
+      "Fournitures",
       "Matériel de bureau",
-      "Autre"
+      "Matériel vidéo"
     ];
 
     function parseNumberFR(value) {
@@ -1942,8 +2119,59 @@
       document.getElementById("footer-ttc").textContent = formatCurrencyEUR(totalTTC);
     }
 
+    function computeCategoryTotals() {
+      const totals = {};
+      let grandHT = 0;
+      let grandTTC = 0;
+      OUTILS.forEach(item => {
+        const cat = item.categorie || "Autre";
+        if (!totals[cat]) totals[cat] = { ht: 0, ttc: 0 };
+        const ht = parseNumberFR(item.coutTotalHT);
+        const ttc = parseNumberFR(item.coutTotalTTC);
+        totals[cat].ht += ht;
+        totals[cat].ttc += ttc;
+        grandHT += ht;
+        grandTTC += ttc;
+      });
+      return { totals, grandHT, grandTTC };
+    }
+
+    function renderCategoryList(currentCategory) {
+      const listEl = document.getElementById("categorie-list");
+      const { totals, grandHT, grandTTC } = computeCategoryTotals();
+
+      listEl.innerHTML = "";
+
+      // "Toutes" item
+      const allItem = document.createElement("div");
+      allItem.className = "cat-item" + (currentCategory === "toutes" ? " active" : "");
+      allItem.dataset.value = "toutes";
+      allItem.innerHTML = `
+        <div class="cat-name">Toutes les catégories</div>
+        <div class="cat-totals">
+          <span>HT ${formatCurrencyEUR(grandHT)}</span>
+          <span>·</span>
+          <span>TTC ${formatCurrencyEUR(grandTTC)}</span>
+        </div>`;
+      listEl.appendChild(allItem);
+
+      CATEGORY_ORDER.forEach(cat => {
+        if (!totals[cat]) return;
+        const item = document.createElement("div");
+        item.className = "cat-item" + (currentCategory === cat ? " active" : "");
+        item.dataset.value = cat;
+        item.innerHTML = `
+          <div class="cat-name">${cat}</div>
+          <div class="cat-totals">
+            <span>HT ${formatCurrencyEUR(totals[cat].ht)}</span>
+            <span>·</span>
+            <span>TTC ${formatCurrencyEUR(totals[cat].ttc)}</span>
+          </div>`;
+        listEl.appendChild(item);
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
-      const selectCat = document.getElementById("categorie-select");
       const searchInput = document.getElementById("search-input");
       const filterLabel = document.getElementById("current-filter-label");
 
@@ -1952,14 +2180,17 @@
 
       function update() {
         renderTable(OUTILS, currentCategory, currentSearch);
+        renderCategoryList(currentCategory);
         filterLabel.textContent =
           currentCategory === "toutes"
             ? "Toutes catégories"
             : currentCategory;
       }
 
-      selectCat.addEventListener("change", () => {
-        currentCategory = selectCat.value;
+      document.getElementById("categorie-list").addEventListener("click", e => {
+        const item = e.target.closest(".cat-item");
+        if (!item) return;
+        currentCategory = item.dataset.value;
         update();
       });
 
